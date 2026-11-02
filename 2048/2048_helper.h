@@ -3,9 +3,69 @@
 #include <iomanip>
 using namespace std;
 
-void move_left(int board[][5], int numrows = 5)
+bool move_left(int board[][5], int& scoreGained, int numrows = 5)
 {
-	//CODE HERE
+	bool changed = false;
+	scoreGained = 0;
+
+	// go through each row of the board
+	for (int r = 0; r < rumrows; r++)
+		{
+			int temp[5] = { 0 };
+			int count = 0;
+
+			// move all nonzero tiles left
+			for(int c = 0; c < 5; c++)
+				{
+					if(board[r][c] != 0)
+					{
+						temp[count] = board[r][c];
+						count++;
+					}
+				}
+
+			// merge adgacent equal tiles
+			int merged[5] = { 0 };
+			int pos = 0;
+
+			for(int c = 0; c < count; c++)
+				{
+					if(c+1 < count && temp[c] == temp[c + 1])
+					{
+						merged[pos] = temp[c] * 2;
+
+						scoreGained += merged[pos];
+
+						c++; // skip the second tile in the pair
+					}
+					else
+					{
+						merged[pos] = temp[c];
+					}
+
+					pos++;
+				{
+
+					// copy the final row back to the board
+
+					for(int c = 0; c < 5; c++)
+						{
+							if(board[r][c] != merged[c])
+							{
+								changed = true;
+							}
+
+							board[r][c] = merged[c];
+						}
+					
+		}
+					return changed;
+	
+	// moves the tiles toward the left
+
+	// matching adjacent tiles merge once per move
+
+	// returns information about the board change
 }
 
 void move_right(int board[][5], int numrows = 5)
