@@ -1,0 +1,3 @@
+2048 Game:
+
+    2048 is a console-based implementation of the classic 2048 puzzle game using a 5×5 board. Players move tiles in four directions to combine matching values, increase their score, and attempt to reach a tile value of 2048 or greater. The program includes scoring, move tracking, win and game-over detection, and the ability to save and load game progress from a text file.
