@@ -9,7 +9,7 @@ bool move_left(int board[][5], int& scoreGained, int numrows = 5)
 	scoreGained = 0;
 
 	// go through each row of the board
-	for (int r = 0; r < rumrows; r++)
+	for (int r = 0; r < numrows; r++)
 		{
 			int temp[5] = { 0 };
 			int count = 0;
@@ -44,7 +44,7 @@ bool move_left(int board[][5], int& scoreGained, int numrows = 5)
 					}
 
 					pos++;
-				{
+				}
 
 					// copy the final row back to the board
 
@@ -59,6 +59,7 @@ bool move_left(int board[][5], int& scoreGained, int numrows = 5)
 						}
 					
 		}
+		}
 					return changed;
 	
 	// moves the tiles toward the left
@@ -68,19 +69,163 @@ bool move_left(int board[][5], int& scoreGained, int numrows = 5)
 	// returns information about the board change
 }
 
-void move_right(int board[][5], int numrows = 5)
+bool move_right(int board[][5], int& scoreGained, int numrows = 5)
 {
-	//CODE HERE
+	bool changed = false;
+	scoreGained = 0;
+
+	// go through each row
+	for(int r = 0; r < numrows; r++)
+		{
+			int temp[5] = { 0 };
+			int count = 0;
+
+			// step 1: collect nonzero tiles from right to left
+			for(int c = 4; c >= 0; c--)
+				{
+				if(board[r][c] != -)
+				{
+					temp[count] = board[r][c];
+					count++;
+				}
+				}
+
+			int merged[5] = { 0 };
+			int pos = 0;
+
+			// step 2: merge equal adjacent tiles
+			for(int c = 0; c < count; c++)
+			{
+				if(c + 1 < count && temp[c] == temp[c + 1])
+				{
+					merged[pos] = temp[c] * 2;
+					scoreGained += merged[pos];
+					c++;
+				}
+				else
+				{
+					merged[pos] = temp[c];
+				}
+
+				pos++;
+			}
+
+			// step 3: copy values back from right to left
+			for(int c = 4; c >= 0; c--)
+			{
+				if(board[r][c] != merged[4 - c])
+				{
+					changed = true;
+				}
+
+				board[r][c] = merged[4 - c];
+			}
+		}
+	return changed;
 }
 
-void move_up(int board[][5], int numrows = 5)
+bool move_up(int board[][5], int& scoreGained, int numrows = 5)
 {
-	//CODE HERE
+	bool changed = false;
+	scoreGained = 0;
+
+	// go through each column
+	for(int c = 0; c < 5; c++)
+	{
+		int temp[5] = { 0 };
+		int count = 0;
+
+		// step 1: collect nonzero tiles from top to bottom
+		for(int r = 0; r < numrows; r++)
+		{
+			if(board[r][c] != 0)
+			{
+				temp[count] = board[r][c];
+				count++;
+			}
+		}
+
+		int merged[5] = { 0 };
+		int pos = 0;
+
+		// step 2: merge equal adjacent tiles
+		for(int r = 0; r < count; r++)
+			{
+				if(r + 1 < count && temp[r] == temp[r + 1])
+				{
+					merged[pos] = temp[r] * 2;
+					scoreGained += merged[pos];
+					r++
+				}
+				else
+				{
+					merged[pos] = temp[r];
+				}
+				pos++;
+			}
+
+		// step 3: copy values back from top to bottom
+		for(int r = 0; r < numrows; r++)
+			{
+				if(board[r][c] != merged[r])
+				{
+					changed = true;
+				}
+				board[r][c] = merged[r];
+			}
+	}
+	return changed;
 }
 
-void move_down(int board[][5], int numrows = 5)
+bool move_down(int board[][5], int& scoreGained, int numrows = 5)
 {
-	//CODE HERE
+	bool changed = false;
+	scoreGained = 0;
+
+	// go through each column
+	for(int c = 0; c < 5; c++)
+		{
+			int temp[5] = { 0 };
+			int count = 0;
+
+			// step 1: collect nonzero tiles from top to bottom
+			for(int r = numrows - 1; r >= 0; r--)
+				{
+					if(board[r][c] != 0)
+					{
+						temp[count] = board[r][c];
+						count++;
+					}
+				}
+			int merged[5] = { 0 };
+			int pos = 0;
+
+			// step 2: merge equal adjacent tiles
+			for(int r = 0; r < count; r++)
+				{
+					if(r + 1 < count && temp[r] == temp[r + 1])
+					{
+						merged[pos] = temp[r] * 2;
+						scoreGained += merged[pos];
+						r++
+					}
+					else
+					{
+						merged[pos] = temp[r];
+					}
+					pos++;
+				}
+			// step 3: copy values back from bottom to top
+			for(int r = numrows - 1; r >= 0; r--)
+				{
+					if(board[r][c] != merged[numrows - 1 - r])
+					{
+						changed = true;
+					}
+					board[r][c] = merged[numrows - 1 - r];
+				}
+		}
+		return changed; 
 }
 
 
