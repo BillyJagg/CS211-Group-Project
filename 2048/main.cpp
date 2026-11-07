@@ -1,10 +1,12 @@
 #include <iostream>
 #include "2048_helper.h"
+#include "save_load.h"
 using namespace std;
 
 int main()
 {
 	int size = 5;
+	int score = 0;
 	int board[5][5] = {
 		{0, 4, 2, 4, 0},
 		{0, 0, 0, 0, 0},
@@ -21,7 +23,9 @@ int main()
 	while (choice != 'e')
 	{
 
-		cout << "Please enter choice:{u,d,l,r,e} for UP, DOWN, LEFT, RIGHT, Exit: " << endl;
+		cout << "Please enter choice:{u,d,l,r,s,o,e}"
+    		 << " for UP, DOWN, LEFT, RIGHT, Save, Open, Exit: "
+    		 << endl;
 		cout << "Choice: ";
 		cin >> choice;
 
@@ -30,12 +34,37 @@ int main()
 		else if (choice == 'd')
 			move_down(board, size);
 		else if (choice == 'l')
-			move_left(board, size);
+			int scoreGained = 0;
+			move_left(board, scoreGained, size);
+			score += scoreGained;
 		else if (choice == 'r')
 			move_right(board, size);
+		else if (choice == 's')
+		{
+    		if (save_game(board, score))
+        		cout << "Game saved successfully!" << endl;
+    		else
+        		cout << "Error saving game." << endl;
+		}
+		else if (choice == 'o')
+		{
+    		if (load_game(board, score))
+        		cout << "Game loaded successfully!" << endl;
+    		else
+        		cout << "Error loading game." << endl;
+		}
 
-		insert_random(board, size);
-		print_board(board);
+		if (choice == 'u' || choice == 'd' ||
+    		choice == 'l' || choice == 'r')
+		{
+    		insert_random(board, size);
+		}
+
+		if (choice != 'e')
+		{
+    		print_board(board);
+    		cout << "Score: " << score << endl;
+		}
 
 	}
 
