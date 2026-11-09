@@ -25,7 +25,9 @@ int main()
 	char choice = 'u';	//initialized
 	while (choice != 'e')
 	{
-
+		changed = false;
+		scoreGained = 0;
+		
 		cout << "Please enter choice:{u,d,l,r,s,o,e}"
 			<< " for UP, DOWN, LEFT, RIGHT, Save, Open, Exit: "
 			<< endl;
