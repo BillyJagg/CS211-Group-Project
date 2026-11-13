@@ -8,7 +8,7 @@ using namespace std;
 
 // Save the current board and score
 bool save_game(const int board[][5], int score,
-               const string& filename = "save.txt")
+    const string& filename = "save.txt")
 {
     ofstream file(filename);
 
@@ -32,7 +32,7 @@ bool save_game(const int board[][5], int score,
 
 // Load a previously saved board and score
 bool load_game(int board[][5], int& score,
-               const string& filename = "save.txt")
+    const string& filename = "save.txt")
 {
     ifstream file(filename);
 
